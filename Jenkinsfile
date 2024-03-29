@@ -14,6 +14,7 @@ pipeline {
           // Set 'app' as an environment variable for later use
           env.APP_IMAGE = app
         }
+
       }
     }
 
@@ -28,7 +29,9 @@ pipeline {
             // signal the orchestrator that there is a new version
           }
         }
+
       }
     }
+
   }
 }
