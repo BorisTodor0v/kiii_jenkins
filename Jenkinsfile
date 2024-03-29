@@ -11,7 +11,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    def app = docker.build("t0dorov/kiii_jenkins")
+                   app = docker.build("t0dorov/kiii_jenkins")
                 }
             }
         }
