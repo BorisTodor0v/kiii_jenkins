@@ -1,26 +1,32 @@
-def app
 pipeline {
     agent any
-    
+
+    environment {
+        DOCKER_IMAGE = 't0dorov/kiii_jenkins'
+    }
+
     stages {
         stage('Clone repository') {
             steps {
                 checkout scm
             }
         }
+        
         stage('Build image') {
             steps {
                 script {
-                   app = docker.build("t0dorov/kiii_jenkins")
+                    docker.build(DOCKER_IMAGE)
                 }
             }
         }
+        
         stage('Push image') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        app.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
-                        app.push("${env.BRANCH_NAME}-latest")
+                        dockerImage = docker.image(DOCKER_IMAGE)
+                        dockerImage.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+                        dockerImage.push("${env.BRANCH_NAME}-latest")
                         // signal the orchestrator that there is a new version
                     }
                 }
