@@ -1,5 +1,4 @@
 pipeline {
-    def app
     agent any
     
     stages {
@@ -11,7 +10,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    app = docker.build("t0dorov/kiii_jenkins")
+                    def app = docker.build("t0dorov/kiii_jenkins")
                 }
             }
         }
